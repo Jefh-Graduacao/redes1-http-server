@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.io.FileInputStream;
 import java.util.StringTokenizer;
 
-public class Server implements Runnable, AutoCloseable {
+public class Server implements Runnable {
 
     private Socket connectionSocket;
 
@@ -31,7 +31,6 @@ public class Server implements Runnable, AutoCloseable {
                                         .configureOutputStream(connectionSocket.getOutputStream())
                                         .addHeader("Server", "Server boladasso vem tranquilo")
                                         .addHeader("Date", String.valueOf(new Date()))
-                                        .addHeader("Content-Type", "text/html")
                                         .build();
             
             response.send();
@@ -41,11 +40,11 @@ public class Server implements Runnable, AutoCloseable {
             //TODO:
         }
         finally {
-            try {
+            /*try {
                 connectionSocket.close();
             }catch (IOException ioex) {
                 //TODO:
-            }
+            }*/
         }
     }    
 }

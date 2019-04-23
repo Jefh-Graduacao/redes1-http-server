@@ -23,10 +23,15 @@ public class Request {
         return method;
     }
     
-    public ResponseBuilder createResponse() {        
+    public ResponseBuilder createResponse() {
+        if(resource.equals("/")) {
+            resource = "index.html";
+        }
+
         File file = new File(pagesPath, resource);
         if(!file.exists()) {
-            return new ResponseBuilder().withStatusCode(StatusCode.NotFound).addResponseFile(new File(pagesPath, "default/not_found.html"));
+            return new ResponseBuilder().withStatusCode(StatusCode.NotFound)
+                                        .addResponseFile(new File(pagesPath, "default/not_found.html"));
         }
         
         return new ResponseBuilder().withStatusCode(StatusCode.Ok).addResponseFile(file);

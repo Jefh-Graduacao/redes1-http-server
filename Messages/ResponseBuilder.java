@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
+import java.nio.file.Path;
 
 public class ResponseBuilder {
     private Response response;
@@ -36,13 +37,17 @@ public class ResponseBuilder {
 
     public ResponseBuilder addResponseFile(File file) {
         int fileLength = (int)file.length();
+        Path filePath = file.toPath();
+        String mime = "";
 
         try{
-            this.response.addResponseData(Files.readAllBytes(file.toPath()), fileLength);
+            this.response.addResponseData(Files.readAllBytes(filePath), fileLength);
+            mime = Files.probeContentType(filePath);
         }catch(IOException ioex) {
             // TODO:
         }
                 
+        this.response.addHeader("Content-Type", mime);
         this.response.addHeader("Content-Length", String.valueOf(fileLength));
         return this;
     }
