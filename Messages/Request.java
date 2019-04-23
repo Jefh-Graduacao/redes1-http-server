@@ -4,7 +4,7 @@ import java.nio.file.Files;
 import java.io.File;
 
 public class Request {
-    private static File pagesPath = new File("./static");
+    private static File pagesPath = new File("./.static");
 
     private String method;
     private String resource;

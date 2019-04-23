@@ -40,11 +40,11 @@ public class Server implements Runnable {
             //TODO:
         }
         finally {
-            /*try {
+            try {
                 connectionSocket.close();
             }catch (IOException ioex) {
                 //TODO:
-            }*/
+            }
         }
     }    
 }
