@@ -1,0 +1,31 @@
+{    
+    "port": 9002,
+    "sites": [
+        {
+            "id": "van-gogh",
+            "name": "Van Gogh Landing Page",            
+            "location": "C:\\Users\\jeferson.bueno\\Downloads\\tmp\\site\\van-gogh",
+            "default_pages": [
+                "index.html",
+                "index.htm"
+            ]
+        },
+        {
+            "id": "site-txt",
+            "name": "Teste de TXT",
+            "location": "C:\\Users\\jeferson.bueno\\Downloads\\tmp\\site\\site-txt",
+            "default_pages": [
+                "main.txt"
+            ]
+        },
+        {
+            "id": "arquivos",
+            "name": "Site de Arquivos",
+            "location": "C:\\Users\\jeferson.bueno\\Downloads\\tmp\\site\\arquivos",
+            "default_pages": [
+                "main.html",
+                "principal.html"
+            ]
+        }
+    ]
+}

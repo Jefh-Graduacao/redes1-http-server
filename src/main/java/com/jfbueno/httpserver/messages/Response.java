@@ -1,10 +1,12 @@
+package com.jfbueno.httpserver.messages;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.BufferedOutputStream;
-import java.io.IOException;
 import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
+import com.jfbueno.httpserver.helpers.*;
 
 public class Response {
     private Map<String, String> headers;
@@ -21,16 +23,16 @@ public class Response {
     }
 
     public void setOutputStream(OutputStream outputStream) {        
-        this.outputPrinter = new PrintWriter(outputStream); //connectionSocket.getOutputStream()
+        this.outputPrinter = new PrintWriter(outputStream);
         this.outputDataStream = new BufferedOutputStream(outputStream);
     }
 
     public int getStatusCode() {
-        return statusCode;
+        return statusCode.getCode();
     }
 
-    public void setStatusCode(int statusCode) {
-        this.statusCode = statusCode;
+    public void setStatusCode(int code) {
+        this.statusCode = StatusCode.fromIntStatus(code);
     }
 
     public void setStatusCode(StatusCode statusCode) {

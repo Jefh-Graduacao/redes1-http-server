@@ -1,8 +1,11 @@
+package com.jfbueno.httpserver.messages;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import com.jfbueno.httpserver.helpers.*;
 
 public class ResponseBuilder {
     private Response response;

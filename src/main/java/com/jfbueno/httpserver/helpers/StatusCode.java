@@ -1,5 +1,6 @@
+package com.jfbueno.httpserver.helpers;
+
 import java.util.Arrays;
-import java.util.Map;
 
 public class StatusCode {
     public static final StatusCode Ok = new StatusCode(200, "OK");

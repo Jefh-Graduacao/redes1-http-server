@@ -1,18 +1,27 @@
+package com.jfbueno.httpserver.messages;
+
+import java.util.Iterator;
 import java.util.StringTokenizer;
-import java.io.FileInputStream;
-import java.nio.file.Files;
 import java.io.File;
 
+import com.jfbueno.httpserver.config.AppConfig;
+import com.jfbueno.httpserver.config.Site;
+import com.jfbueno.httpserver.helpers.*;
+
 public class Request {
-    private static File pagesPath = new File("./.static");
+    private static File pagesPath = new File("C:\\Users\\jeferson.bueno\\Downloads\\tmp\\site");
 
     private String method;
     private String resource;
+    private Site owner;
 
     public Request(String headerLine) {        
         StringTokenizer parse = new StringTokenizer(headerLine);
         this.method = parse.nextToken().toUpperCase();
         this.resource = parse.nextToken().toLowerCase();
+
+        StringTokenizer tokens = new StringTokenizer(this.resource, "/");
+        this.owner = AppConfig.getInstance().getConfig().getSite(tokens.nextToken());
     }
 
     public String getResource() {
@@ -23,17 +32,14 @@ public class Request {
         return method;
     }
     
-    public ResponseBuilder createResponse() {
-        if(resource.equals("/")) {
-            resource = "index.html";
-        }
+    public ResponseBuilder createResponse() {        
+        File page = this.owner.getPage(resource);
 
-        File file = new File(pagesPath, resource);
-        if(!file.exists()) {
+        if(!page.exists()) {
             return new ResponseBuilder().withStatusCode(StatusCode.NotFound)
                                         .addResponseFile(new File(pagesPath, "default/not_found.html"));
         }
         
-        return new ResponseBuilder().withStatusCode(StatusCode.Ok).addResponseFile(file);
+        return new ResponseBuilder().withStatusCode(StatusCode.Ok).addResponseFile(page);
     }
 }
