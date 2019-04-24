@@ -37,7 +37,7 @@ public class Request {
 
         if(!page.exists()) {
             return new ResponseBuilder().withStatusCode(StatusCode.NotFound)
-                                        .addResponseFile(new File(pagesPath, "default/not_found.html"));
+                                        .addResponseFile(new File("./target/classes/pages/not-found.html"));
         }
         
         return new ResponseBuilder().withStatusCode(StatusCode.Ok).addResponseFile(page);

@@ -7,6 +7,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import com.jfbueno.httpserver.helpers.*;
 
+import org.apache.tika.Tika;
+
 public class ResponseBuilder {
     private Response response;
 
@@ -46,6 +48,9 @@ public class ResponseBuilder {
         try{
             this.response.addResponseData(Files.readAllBytes(filePath), fileLength);
             mime = Files.probeContentType(filePath);
+            
+            if(mime == null || mime.isEmpty())
+                mime = new Tika().detect(file);
         }catch(IOException ioex) {
             // TODO:
         }
