@@ -1,0 +1,14 @@
+{    
+    "port": 80,
+    "sites": [
+        {
+            "id": "my-site",
+            "name": "My site",            
+            "location": "/User/sites/site1",
+            "default_pages": [
+                "index.html",
+                "index.htm"
+            ]
+        }
+    ]
+}

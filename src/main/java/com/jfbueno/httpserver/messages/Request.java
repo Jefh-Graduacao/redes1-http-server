@@ -1,16 +1,14 @@
 package com.jfbueno.httpserver.messages;
 
-import java.util.Iterator;
 import java.util.StringTokenizer;
 import java.io.File;
 
 import com.jfbueno.httpserver.config.AppConfig;
+import com.jfbueno.httpserver.config.Configuration;
 import com.jfbueno.httpserver.config.Site;
 import com.jfbueno.httpserver.helpers.*;
 
 public class Request {
-    private static File pagesPath = new File("C:\\Users\\jeferson.bueno\\Downloads\\tmp\\site");
-
     private String method;
     private String resource;
     private Site owner;
@@ -21,7 +19,16 @@ public class Request {
         this.resource = parse.nextToken().toLowerCase();
 
         StringTokenizer tokens = new StringTokenizer(this.resource, "/");
-        this.owner = AppConfig.getInstance().getConfig().getSite(tokens.nextToken());
+        Configuration config = AppConfig.getInstance().getConfig();
+        String siteKey;
+
+        if(tokens.countTokens() == 0) {
+            siteKey = "root";
+        } else {
+            siteKey = tokens.nextToken();
+        }
+
+        this.owner = config.getSite(config.hasSite(siteKey) ? siteKey : "root");
     }
 
     public String getResource() {
@@ -32,12 +39,17 @@ public class Request {
         return method;
     }
     
-    public ResponseBuilder createResponse() {        
+    public ResponseBuilder createResponse() {
+        ResponseBuilder notFoundResponse = new ResponseBuilder().withStatusCode(StatusCode.NotFound)
+                                                .addResponseFile(new File("./target/classes/pages/not-found.html"));
+        
+        if(this.owner == null)
+            return notFoundResponse;
+        
         File page = this.owner.getPage(resource);
 
         if(!page.exists()) {
-            return new ResponseBuilder().withStatusCode(StatusCode.NotFound)
-                                        .addResponseFile(new File("./target/classes/pages/not-found.html"));
+            return notFoundResponse;
         }
         
         return new ResponseBuilder().withStatusCode(StatusCode.Ok).addResponseFile(page);

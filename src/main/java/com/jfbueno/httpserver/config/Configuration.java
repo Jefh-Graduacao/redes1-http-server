@@ -17,6 +17,10 @@ public class Configuration {
         return sitesMap.values();
     }
 
+    public boolean hasSite(String id) {
+        return sitesMap.containsKey(id);
+    }
+
     public Site getSite(String id) {
         return sitesMap.get(id);
     }
