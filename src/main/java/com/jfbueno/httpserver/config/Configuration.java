@@ -5,10 +5,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Configuration {
+
     private int port;
     private Site[] sites;
     private Map<String, Site> sitesMap;
-    
+
     public int getPort() {
         return port;
     }
@@ -26,11 +27,13 @@ public class Configuration {
     }
 
     public void init() {
-        if(sitesMap != null) return;
+        if (sitesMap != null) {
+            return;
+        }
 
-        sitesMap = new HashMap<String, Site>();
+        sitesMap = new HashMap<>();
 
-        for(Site s : sites) {
+        for (Site s : sites) {
             sitesMap.put(s.getId(), s);
         }
     }
