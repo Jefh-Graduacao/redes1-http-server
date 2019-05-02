@@ -13,34 +13,24 @@ public class Server implements Runnable {
 
     public Server(Socket connectionSocket) throws IOException {
         this.connectionSocket = connectionSocket;
-    }    
+    }
 
     @Override
     public void run() {
-        try {
-            
-            BufferedReader inputReader = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
+        try (BufferedReader inputReader = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()))) {
             String input = inputReader.readLine();
             Request request = new Request(input);
-                        
+
             Response response = request.createResponse()
-                                        .configureOutputStream(connectionSocket.getOutputStream())
-                                        .addHeader("Server", "Server boladasso vem tranquilo")
-                                        .addHeader("Date", String.valueOf(new Date()))
-                                        .build();
-            
+                    .configureOutputStream(connectionSocket.getOutputStream())
+                    .addHeader("Server", "Server boladasso vem tranquilo")
+                    .addHeader("Date", String.valueOf(new Date()))
+                    .build();
+
             response.send();
             inputReader.close();
-
         } catch (IOException ioex) {
             //TODO:
         }
-        finally {
-            try {
-                connectionSocket.close();
-            }catch (IOException ioex) {
-                //TODO:
-            }
-        }
-    }    
+    }
 }
