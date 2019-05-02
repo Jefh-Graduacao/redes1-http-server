@@ -20,7 +20,7 @@ public class App {
         }
 
         int port = AppConfig.getInstance().getConfig().getPort();
-        port = port >= 0 ? 9001 : port;
+        port = port <= 0 ? 9001 : port;
         
         ServerSocket serverConnect = new ServerSocket(port);
         
